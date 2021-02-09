@@ -10,23 +10,44 @@ import NotFound from './pages/NotFound.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', redirect: '/coaches' },
+    { 
+      path: '/', 
+      redirect: '/coaches' 
+    },
     // Show List of coaches
-    { path: '/coaches', component: CoachesList },
+    { 
+      path: '/coaches', 
+      component: CoachesList 
+    },
     // Show Individual coaches
-    { path: '/coaches/:id', component: CoachDetail, 
+    { 
+      path: '/coaches/:id', 
+      component: CoachDetail, 
+      props: true,
       children: [
         // /coaches/c1/contact
         // Contact coach
-        { path: 'contact', component: ContactCoach }
+        { 
+          path: 'contact', 
+          component: ContactCoach 
+        }
       ]
     },
     // Register as a coach
-    { path: '/register', component: CoachRegistration },
+    { 
+      path: '/register', 
+      component: CoachRegistration 
+    },
     // Send requests to a coach
-    { path: '/requests', component: RequestsReceived },
+    { 
+      path: '/requests', 
+      component: RequestsReceived 
+    },
     // Show not found page
-    { path: '/:notFound(.*)', component: NotFound },
+    { 
+      path: '/:notFound(.*)', 
+      component: NotFound 
+    },
   ],
 })
 
