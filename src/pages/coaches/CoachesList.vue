@@ -1,14 +1,21 @@
 <template>
+  <!-- !!error translates string into truthy boolean value -->
+  <base-dialog :show="!!error" title="An error occured!" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
   <section>
     <coach-filter @change-filter="setFilters"></coach-filter>
   </section>
   <section>
     <base-card>
     <div class="controls">
-      <base-button mode="outline">Refresh</base-button>
-      <base-button v-if="!isCoach" link to="/register">Register as Coach</base-button>
+      <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
+      <base-button v-if="!isCoach && !isLoading" link to="/register">Register as Coach</base-button>
     </div>
-    <ul v-if="hasCoaches">
+    <div v-if="isLoading">
+      <base-spinner></base-spinner>
+    </div>
+    <ul v-else-if="hasCoaches">
       <coach-item 
         v-for="coach in filteredCoaches"
         :key="coach.id"
@@ -35,11 +42,13 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
+      error: null,
       activeFilters: {
         frontend: true,
         backend: true,
         career: true
-      }
+      },
     }
   },
   computed: {
@@ -64,12 +73,31 @@ export default {
       })
     },
     hasCoaches() {
-      return this.$store.getters['coaches/hasCoaches']
+      return !this.isLoading && this.$store.getters['coaches/hasCoaches']
     }
+  },
+  created() {
+    this.loadCoaches()
   },
   methods: {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters
+    },
+    // Receives data from store/coaches/actions.js
+    async loadCoaches() {
+      this.isLoading = true
+      
+      try {
+        // Promise
+        await this.$store.dispatch('coaches/loadCoaches')
+      } catch(error) {
+        this.error = error.message || 'Something went wrong'
+      }
+      
+      this.isLoading = false
+    },
+    handleError() {
+      this.error = null
     }
   }
 }
