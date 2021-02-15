@@ -1,5 +1,3 @@
-// Load env
-require('dotenv').config()
 import { createApp } from 'vue'
 
 import router from './router.js'
@@ -23,3 +21,4 @@ app.component('base-spinner', BaseSpinner)
 app.component('base-dialog', BaseDialog)
 
 app.mount('#app')
+

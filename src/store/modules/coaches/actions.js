@@ -1,4 +1,5 @@
 export default {
+  // For registering a new coach and storing its data to firebase
   async registerCoach(context, formData) {
     const userId = context.rootGetters.userId
 
@@ -10,7 +11,7 @@ export default {
       areas: formData.areas
     }
 
-    const response = await fetch(`${process.env.FIREBASE_DB}coaches/${userId}.json`, {
+    const response = await fetch(`${process.env.VUE_APP_FIREBASE_DB}coaches/${userId}.json`, {
       method: 'PUT',
       body: JSON.stringify(coachData)
     })
@@ -31,8 +32,10 @@ export default {
   },
   // Get coaches data from firebase
   async loadCoaches(context) {
-    const response = await fetch(`${process.env.FIREBASE_DB}coaches.jso`)
+    const response = await fetch(`${process.env.VUE_APP_FIREBASE_DB}coaches.json`)
     const responseData = await response.json()
+
+    // console.log(responseData)
 
     if(!response.ok) {
       const error = new Error(responseData.message || 'Failed to fetch!')
