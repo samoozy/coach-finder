@@ -11,7 +11,7 @@ const store = createStore({
   // global state
   state() {
     return {
-      // This is for user identification to verify whether the user has already registered as a coach
+      // This is for identifying whether the user has already registered as a coach
       // Authentication
       userId: 'c3'
     }

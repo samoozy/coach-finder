@@ -31,7 +31,13 @@ export default {
     })
   },
   // Get coaches data from firebase
-  async loadCoaches(context) {
+  async loadCoaches(context, payload) {
+    // This is for caching data
+    // Ends execution if shouldUpdate returns false
+    if(!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return
+    }
+
     const response = await fetch(`${process.env.VUE_APP_FIREBASE_DB}coaches.json`)
     const responseData = await response.json()
 
@@ -63,5 +69,6 @@ export default {
     }
 
     context.commit('setCoaches', coaches)
+    context.commit('setFetchTimestamp')
   }
 }
