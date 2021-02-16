@@ -25,6 +25,7 @@ export default {
 
     context.commit('addRequest', newRequest)
   },
+  // Fetches data from firebase and passes it to mutations so the data can be inserted into the requests state
   async fetchRequests(context) {
     const coachId = context.rootGetters.userId
     const response = await fetch(`${process.env.VUE_APP_FIREBASE_DB}requests/${coachId}.json`)
