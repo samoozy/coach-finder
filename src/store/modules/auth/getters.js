@@ -8,5 +8,8 @@ export default {
   isAuthenticated(state) {
     // Convert to boolean
     return !!state.token
+  },
+  loggedout(state) {
+    return state.loggedout
   }
 }
