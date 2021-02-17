@@ -14,6 +14,21 @@ export default {
   components: {
     TheHeader
   },
+  computed: {
+    loggedout() {
+      return this.$store.getters.loggedout
+    }
+  },
+  created() {
+    this.$store.dispatch('tryLogin')
+  },
+  watch: {
+    loggedout(currentVal, previousVal) {
+      if(currentVal && currentVal !== previousVal) {
+        this.$router.replace('/coaches')
+      }
+    }
+  }
 }
 </script>
 
