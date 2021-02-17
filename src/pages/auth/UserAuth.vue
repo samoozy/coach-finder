@@ -70,15 +70,18 @@ export default {
       // Trigger loading screen
       this.isLoading = true
 
+      // For dispatch payload
+      const actionPayload = {
+        email: this.email,
+        password: this.password
+      }
+
       try {
         // send HTTP request
         if(this.mode === 'login') {
-          // ...
+          await this.$store.dispatch('login', actionPayload)
         } else {
-          await this.$store.dispatch('signup', {
-            email: this.email,
-            password: this.password
-          })
+          await this.$store.dispatch('signup', actionPayload)
         }
       } catch(error) {
         this.error = error.message || 'Uh oh! Something went wrong!'
