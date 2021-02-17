@@ -2,6 +2,7 @@ export default {
   // For registering a new coach and storing its data to firebase
   async registerCoach(context, formData) {
     const userId = context.rootGetters.userId
+    console.log(userId)
 
     const coachData = {
       firstName: formData.first,

@@ -11,7 +11,8 @@
       <base-card>
       <div class="controls">
         <base-button mode="outline" @click="loadCoaches(true)">Refresh</base-button>
-        <base-button v-if="!isCoach && !isLoading" link to="/register">Register as Coach</base-button>
+        <base-button link to="/auth" v-if="!isLoggedin">Login</base-button>
+        <base-button v-if="isLoggedin && !isCoach && !isLoading" link to="/register">Register as Coach</base-button>
       </div>
       <div v-if="isLoading">
         <base-spinner></base-spinner>
@@ -54,6 +55,9 @@ export default {
     }
   },
   computed: {
+    isLoggedin() {
+      return this.$store.getters.isAuthenticated
+    },
     // This is for displaying register as a coach button only if the user is not already registered as a coach
     isCoach() {
       return this.$store.getters['coaches/isCoach']

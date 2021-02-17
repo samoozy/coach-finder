@@ -17,12 +17,10 @@ export default {
       throw error
     }
 
-    console.log(responseData)
-
     // Commit the response from firebase to mutations
     context.commit('setUser', {
       token: responseData.idToken,
-      userId: responseData.userId,
+      userId: responseData.localId,
       tokenExpiration: responseData.expiresIn
     })
   },
@@ -45,13 +43,18 @@ export default {
       throw error
     }
 
-    console.log(responseData)
-
     // Commit the response from firebase to mutations
     context.commit('setUser', {
       token: responseData.idToken,
-      userId: responseData.userId,
+      userId: responseData.localId,
       tokenExpiration: responseData.expiresIn
     })
   },
+  logout(context) {
+    context.commit('setUser', {
+      token: null,
+      userId: null,
+      tokenExpiration: null
+    })
+  }
 }
