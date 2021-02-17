@@ -28,7 +28,10 @@ export default {
   // Fetches data from firebase and passes it to mutations so the data can be inserted into the requests state
   async fetchRequests(context) {
     const coachId = context.rootGetters.userId
-    const response = await fetch(`${process.env.VUE_APP_FIREBASE_DB}requests/${coachId}.json`)
+    // Retreive firebase token from auth store
+    const token = context.rootGetters.token
+
+    const response = await fetch(`${process.env.VUE_APP_FIREBASE_DB}requests/${coachId}.json?auth=${token}`)
 
     const responseData = await response.json()
 

@@ -11,7 +11,10 @@ export default {
       areas: formData.areas
     }
 
-    const response = await fetch(`${process.env.VUE_APP_FIREBASE_DB}coaches/${userId}.json`, {
+    // Retreive firebase token
+    const token = context.rootGetters.token
+
+    const response = await fetch(`${process.env.VUE_APP_FIREBASE_DB}coaches/${userId}.json?auth=${token}`, {
       method: 'PUT',
       body: JSON.stringify(coachData)
     })
